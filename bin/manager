@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ "$1" == "algo" ]; then
+  cd algo && bin/run $2
+else
+  echo "Invalid argument. Use 'algo' to run the script."
+fi
+
