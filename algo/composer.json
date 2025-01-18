@@ -11,7 +11,8 @@
     "pestphp/pest": "3.*"
   },
   "scripts": {
-    "phpstan": "vendor/bin/phpstan"
+    "phpstan": "vendor/bin/phpstan",
+    "unit-tests": "vendor/bin/pest"
   },
   "autoload": {
     "psr-4": {
