@@ -1,0 +1,86 @@
+#!/usr/local/bin/php
+<?php
+
+namespace FizBuz;
+
+require_once __DIR__ . "/../vendor/autoload.php";
+
+use FizBuz\Business\Exception\BadRequestException;
+use FizBuz\Business\Exception\NoneResultException;
+use FizBuz\Business\FizBuz;
+use FizBuz\Helper\CheckFormat;
+use FizBuz\Helper\Enum\ConsoleColorMessage;
+
+// Check first argument : max number value, 100 by default
+$max = 100;
+if (array_key_exists(1, $argv)) {
+
+    // Must be int
+    if (!CheckFormat::isStringIsInt($argv[1])) {
+        echo ConsoleColorMessage::red->value . 'First argument must be int' .
+            ConsoleColorMessage::default->value . "\n";
+        usage();
+        exit(1);
+    }
+
+    // Must be superior to 1
+    if ($argv[1] < 1) {
+        echo ConsoleColorMessage::red->value . 'Second argument must be superior to zero' .
+            ConsoleColorMessage::default->value . "\n";
+        usage();
+    }
+
+    $max = $argv[1];
+
+}
+
+// Loop from 1 to max number
+for ($i = 1; $i <= $max; $i++) {
+
+    try {
+
+        // Run FizBuz
+        $result = (
+            $fizBuz = new FizBuz($i)
+        )->run();
+
+    } catch (NoneResultException $e) {
+
+        // Not Fiz or Buz => display number
+
+        if (!isset($fizBuz)) {
+            throw new \LogicException('$fizBuz is not defined !');
+        }
+
+        echo ConsoleColorMessage::green->value . $fizBuz->number . ConsoleColorMessage::default->value . "\n";
+
+        // Next number
+        continue;
+
+    } catch (BadRequestException $e) {
+
+        // Business throws a bad request exception
+        echo ConsoleColorMessage::red->value . 'Bad request : ' . $e->getMessage() .
+            ConsoleColorMessage::default->value . "\n";;
+
+    }
+
+    if (!isset($fizBuz)) {
+        throw new \LogicException('$fizBuz is not defined !');
+    }
+
+    // Display result
+    echo ConsoleColorMessage::green->value . $result->value . ConsoleColorMessage::default->value . "\n";
+
+}
+
+function usage()
+{
+
+    echo ConsoleColorMessage::yellow->value;
+    echo 'Run FizBuz algorithm from 1 to N' . "\n";
+    echo 'Usage: run [N]' . "\n";
+    echo 'N must be positive integer suprior to 0 (optional, default is 100)' . "\n";
+    echo ConsoleColorMessage::default->value;
+
+}

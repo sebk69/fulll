@@ -1,0 +1,26 @@
+{
+  "name": "fulll/fiz-buz",
+  "authors": [{"name": "Sébastien Kus", "email": "sebastien.kus@gmail.com"}],
+  "description": "FizBuz algorithm PHP implementation",
+  "keywords": ["php", "fiz-buz"],
+  "require": {
+    "php": "8.4.*"
+  },
+  "require-dev": {
+    "phpstan/phpstan": "*",
+    "pestphp/pest": "3.*"
+  },
+  "scripts": {
+    "phpstan": "vendor/bin/phpstan"
+  },
+  "autoload": {
+    "psr-4": {
+      "FizBuz\\": "src/"
+    }
+  },
+  "config": {
+    "allow-plugins": {
+      "pestphp/pest-plugin": true
+    }
+  }
+}

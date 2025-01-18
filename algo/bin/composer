@@ -1,0 +1,8 @@
+#!/bin/bash
+
+if [ "$(docker ps | grep fiz-buz)" == "" ]
+then
+  docker-compose up -d --build --remove-orphans
+fi
+
+docker exec -it fiz-buz composer $1 $2 $3 $4 $5 $6 $7 $8 $9

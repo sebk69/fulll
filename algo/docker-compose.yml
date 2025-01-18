@@ -1,0 +1,6 @@
+services:
+  fiz-buz:
+    container_name: fiz-buz
+    build: .
+    volumes:
+      - .:/usr/src/fiz-buz
