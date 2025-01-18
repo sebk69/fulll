@@ -13,7 +13,8 @@ COPY . /usr/src/fiz-buz
 WORKDIR /usr/src/fiz-buz
 
 # Update composer
-RUN cd /usr/src/fiz-buz && composer update
+RUN cd /usr/src/fiz-buz && \
+    composer install
 
 # Stay up for invocation
 ENTRYPOINT sleep infinity
