@@ -2,7 +2,7 @@
 
 if [ "$(docker ps | grep fiz-buz)" == "" ]
 then
-  docker-compose up -d --build --remove-orphans
+  docker compose up -d --build --remove-orphans
 fi
 
 docker exec -it fiz-buz ./src/run $1
