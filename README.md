@@ -5,7 +5,8 @@
 ### Run
 
 ```shell
-bin/manager algo [N]
+cd algo
+bin/run [N]
 ```
 
 The program run FizBuz algorithm from 1 to N numbers

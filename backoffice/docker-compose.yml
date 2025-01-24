@@ -1,0 +1,6 @@
+services:
+  backoffice:
+    container_name: backoffice
+    build: .
+    volumes:
+      - .:/usr/src/backoffice
