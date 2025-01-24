@@ -17,3 +17,12 @@ The program run FizBuz algorithm from 1 to N numbers
 cd algo
 bin/composer unit-tests
 ```
+
+## Backend exercise
+
+### Test
+
+```shell
+cd backoffice
+bin/composer behat
+```
