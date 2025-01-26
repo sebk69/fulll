@@ -3,14 +3,18 @@
 namespace Fulll\App\Command;
 
 use Fulll\App\Command\Exception\AlreadyParkedHereException;
+use Fulll\App\Gateway\Command\ManagerInterface\ParkingVehicleManagerInterface;
 use Fulll\Domain\Collection\Exception\VehicleNotFoundException;
-use Fulll\Domain\Entity\Exception\VehicleAlreadyRegistedException;
 use Fulll\Domain\Entity\Fleet;
 use Fulll\Domain\Entity\User;
 use Fulll\Domain\Entity\Vehicle;
 
 class ParkVehicle
 {
+
+    public function __construct(
+        private ParkingVehicleManagerInterface $parkingVehicleManager,
+    ) {}
 
     public function execute(
         Fleet|User $myFleet,
@@ -45,6 +49,9 @@ class ParkVehicle
         }
 
         $parking->setLocation(clone $vehicle->getLocation());
+
+        // Persist parking
+        $this->parkingVehicleManager->saveParkingVehicle($parking);
 
     }
 

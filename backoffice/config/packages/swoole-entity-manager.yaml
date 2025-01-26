@@ -1,0 +1,22 @@
+small_swoole_entity_manager:
+  default_connection: default
+
+  connections:
+    writer:
+      type: mysql
+      host: mysql-writer
+      encoding: utf8
+      database: fleet-manager
+      user: backoffice
+      password: ffa17f886f6342971fc76a75621f1451
+
+    reader:
+      type: mysql
+      host: mysql-reader
+      encoding: utf8
+      database: fleet-manager
+      user: backoffice
+      password: c796cde282db3ac291500f87db0d4061
+
+  database_layers:
+    app: "@projectRoot/database-layers"

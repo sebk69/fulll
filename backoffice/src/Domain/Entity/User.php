@@ -48,6 +48,8 @@ class User
 
     public function setMyFleet(?Fleet $myFleet): self
     {
+
+        $this->fleetId = $myFleet->getId();
         $this->myFleet = $myFleet;
 
         return $this;

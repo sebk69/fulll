@@ -16,7 +16,7 @@ class ParkingVehicle
     public static function create($idVehicle, $idFleet, ?Location $location): self
     {
 
-        return new self()
+        return (new self())
             ->generateId()
             ->setIdVehicle($idVehicle)
             ->setIdFleet($idFleet)

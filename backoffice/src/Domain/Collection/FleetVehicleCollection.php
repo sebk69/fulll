@@ -22,7 +22,7 @@ class FleetVehicleCollection extends VehicleCollection
             throw new VehicleNotFoundException('Vehicle not found in fleet');
         }
 
-
+        return $this;
 
     }
 

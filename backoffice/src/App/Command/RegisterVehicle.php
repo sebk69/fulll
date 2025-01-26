@@ -2,14 +2,18 @@
 
 namespace Fulll\App\Command;
 
-use Fulll\Domain\Collection\Exception\VehicleNotFoundException;
+use Fulll\App\Gateway\Command\ManagerInterface\FleetManagerInterface;
 use Fulll\Domain\Entity\Exception\VehicleAlreadyRegistedException;
 use Fulll\Domain\Entity\Fleet;
 use Fulll\Domain\Entity\User;
 use Fulll\Domain\Entity\Vehicle;
 
-class RegisterVehicle
+final class RegisterVehicle
 {
+
+    public function __construct(
+        private FleetManagerInterface $fleetManager,
+    ) {}
 
     public function execute(
         Fleet|User $myFleet,
@@ -21,18 +25,19 @@ class RegisterVehicle
         }
 
         // Check vehicle don't exist in my fleet
-        $found = true;
-        try {
-            $myFleet->getVehicles()->getVehicleByLicensePlate($vehicle->getLicensePlate());
-        } catch (VehicleNotFoundException) {
-            $found = false;
-        }
-
-        if ($found) {
+        if (
+            $this
+                ->fleetManager
+                ->fleetHasVehicle($myFleet->getId(), $vehicle->getId())
+        ) {
             throw new VehicleAlreadyRegistedException(
                 'Vehicle already exists in fleet #' . $myFleet->getId()
             );
         }
+
+        // Persist vehicle into fleet
+        $this->fleetManager
+            ->addVehicleToFleet($myFleet->getId(), $vehicle->getId());
 
         // Add vehicle to the fleet
         $myFleet
@@ -40,7 +45,9 @@ class RegisterVehicle
             ->push($vehicle);
 
         // Add fleet to vehicle
-        $vehicle->getFleets()->push($myFleet);
+        $vehicle
+            ->getFleets()
+            ->push($myFleet);
 
         return $this;
 

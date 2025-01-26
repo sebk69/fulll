@@ -4,6 +4,8 @@ namespace Fulll\Domain\Entity;
 
 use Fulll\Domain\Collection\FleetCollection;
 use Fulll\Domain\Entity\Trait\HasIdentifier;
+use Small\SwooleEntityManager\Entity\AbstractEntity;
+use Small\SwooleEntityManager\Entity\Attribute\OrmEntity;
 
 class Vehicle
 {
@@ -24,7 +26,7 @@ class Vehicle
     public static function create(string $licensePlate): self
     {
 
-        return new self()
+        return (new self())
             ->generateId()
             ->setLicensePlate($licensePlate)
         ;

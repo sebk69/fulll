@@ -4,3 +4,35 @@ services:
     build: .
     volumes:
       - .:/usr/src/backoffice
+  mysql-writer:
+    image: mysql:8.1
+    container_name: mysql-writer
+    environment:
+      MYSQL_ROOT_PASSWORD: 4869da5f5f508dfbc341342a272c36c8
+      MYSQL_DATABASE: fleet-manager
+      MYSQL_USER: backoffice
+      MYSQL_PASSWORD: ffa17f886f6342971fc76a75621f1451
+    volumes:
+      - mysql_master_data:/var/lib/mysql
+      - ./mysql/mysql-write.cnf:/etc/mysql/conf.d/master.cnf
+      - ./mysql/init/init-writer.sql:/docker-entrypoint-initdb.d/init-writer.sql
+    command: --server-id=1 --log-bin=mysql-bin --binlog-do-db=fleet-manager
+
+  mysql-reader:
+    image: mysql:8.1
+    container_name: mysql-reader
+    depends_on:
+      - mysql-writer
+    environment:
+      MYSQL_ROOT_PASSWORD: 69b064eaeb5732f4c76315829b773b50
+      MYSQL_USER: backoffice
+      MYSQL_PASSWORD: c796cde282db3ac291500f87db0d4061
+    volumes:
+      - mysql_slave_data:/var/lib/mysql
+      - ./mysql/mysql-read.cnf:/etc/mysql/conf.d/slave.cnf
+      - ./mysql/init/init-reader.sql:/docker-entrypoint-initdb.d/init-reader.sql
+    command: --server-id=2 --read-only=1
+
+volumes:
+  mysql_master_data:
+  mysql_slave_data:

@@ -24,7 +24,7 @@ class Fleet
     public static function create(string $idUser): self
     {
 
-        return new self()
+        return (new self())
             ->generateId()
             ->setIdUser($idUser);
 
@@ -50,6 +50,8 @@ class Fleet
     public function setVehicles(FleetVehicleCollection $vehicles): self
     {
         $this->vehicles = $vehicles;
+
+        return $this;
     }
 
     public function getLastParkingVehicles(): ParkingVehicleCollection

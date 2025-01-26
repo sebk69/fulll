@@ -2,11 +2,14 @@
     "type": "project",
     "license": "proprietary",
     "require": {
-        "php": "8.4.*",
+        "php": "8.3.*",
         "symfony/framework-bundle": "7.1.*",
         "symfony/console": "7.1.*",
         "symfony/flex": "2.4.*",
-        "symfony/runtime": "7.2.*"
+        "symfony/runtime": "7.1.*",
+        "small/forms": "1.8.*",
+        "small/swoole-entity-manager-bundle": "1.0.*",
+        "small/clean-application": "1.2.*"
     },
     "require-dev": {
         "behat/behat": "*",

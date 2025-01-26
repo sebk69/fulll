@@ -1,0 +1,52 @@
+<?php
+
+namespace Fulll\Infra\Orm\WriteModel\Manager;
+
+use Fulll\App\Gateway\Command\ManagerInterface\FleetManagerInterface;
+use Fulll\App\Gateway\Command\ManagerInterface\VehicleManagerInterface;
+use Fulll\Infra\Orm\WriteModel\Entity\Fleet;
+use Fulll\Infra\Orm\WriteModel\Entity\Vehicle;
+use Fulll\Infra\Orm\WriteModel\Entity\VehicleInFleet;
+use Fulll\Infra\Orm\WriteModel\Manager\Exception\PersistFailException;
+use Small\Collection\Collection\StringCollection;
+use Small\Forms\Adapter\AnnotationAdapter;
+use Small\Forms\Form\FormBuilder;
+use Small\Forms\ValidationRule\Exception\ValidationFailException;
+use Small\SwooleEntityManager\EntityManager\AbstractRelationnalManager;
+use Small\SwooleEntityManager\EntityManager\Attribute\Connection;
+use Small\SwooleEntityManager\EntityManager\Attribute\Entity;
+
+#[Entity(Vehicle::class)]
+#[Connection('fleet', 'writer')]
+class VehicleManager extends AbstractRelationnalManager
+    implements VehicleManagerInterface
+{
+
+    public function saveVehicle(\Fulll\Domain\Entity\Vehicle $vehicle)
+    {
+
+        $formArray = [
+            'id' => $vehicle->getId(),
+            'licensePlate' => $vehicle->getLicensePlate(),
+            'location' => $vehicle->getLocation() === null ? null : [
+                'longitude' => $vehicle->getLocation()->getLongitude(),
+                'latitude' => $vehicle->getLocation()->getLatitude(),
+                'altitude' => $vehicle->getLocation()->getAltitude(),
+            ],
+        ];
+
+        try {
+            FormBuilder::createFromAdapter(new AnnotationAdapter($ormVehicle = $this->newEntity()))
+                ->fillFromArray($formArray)
+                ->validate($messages = new StringCollection(), true)
+                ->hydrate($ormVehicle);
+        } catch (ValidationFailException) {
+            throw (new PersistFailException('Can\t persist vehicle'))
+                ->setReasons($messages);
+        }
+
+        $ormVehicle->persist();
+
+    }
+
+}
