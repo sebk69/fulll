@@ -8,6 +8,7 @@ use Fulll\Infra\Orm\ReadModel\Manager\VehicleRepository;
 use Small\Forms\Form\Field\Type\StringType;
 use Small\Forms\ValidationRule\ValidateNotEmpty;
 use Small\SwooleEntityManager\Entity\AbstractEntity;
+use Small\SwooleEntityManager\Entity\Attribute\Collection;
 use Small\SwooleEntityManager\Entity\Attribute\Field;
 use Small\SwooleEntityManager\Entity\Attribute\OrmEntity;
 use Small\SwooleEntityManager\Entity\Attribute\PrimaryKey;

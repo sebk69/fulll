@@ -26,42 +26,49 @@ class Kernel extends BaseKernel
         parent::boot();
 
         Facade::setParameter('userManager',
+            /** @phpstan-ignore-next-line  */
             $this->getContainer()
                 ->get(EntityManagerFactoryInterface::class)
                 ->get(UserManager::class)
         );
 
         Facade::setParameter('fleetManager',
+            /** @phpstan-ignore-next-line  */
             $this->getContainer()
                 ->get(EntityManagerFactoryInterface::class)
                 ->get(FleetManager::class)
         );
 
         Facade::setParameter('vehicleManager',
+            /** @phpstan-ignore-next-line  */
             $this->getContainer()
                 ->get(EntityManagerFactoryInterface::class)
                 ->get(VehicleManager::class)
         );
 
         Facade::setParameter('parkingVehicleManager',
+            /** @phpstan-ignore-next-line  */
             $this->getContainer()
                 ->get(EntityManagerFactoryInterface::class)
                 ->get(ParkingVehicleManager::class)
         );
 
         Facade::setParameter('fleetRepository',
+            /** @phpstan-ignore-next-line  */
             $this->getContainer()
                 ->get(EntityManagerFactoryInterface::class)
                 ->get(FleetRepository::class)
         );
 
         Facade::setParameter('vehicleRepository',
+            /** @phpstan-ignore-next-line  */
             $this->getContainer()
                 ->get(EntityManagerFactoryInterface::class)
                 ->get(VehicleRepository::class)
         );
 
         Facade::setParameter('parkingVehicleRepository',
+            /** @phpstan-ignore-next-line  */
             $this->getContainer()
                 ->get(EntityManagerFactoryInterface::class)
                 ->get(ParkingVehicleRepository::class)

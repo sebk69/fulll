@@ -59,6 +59,7 @@ trait HasIdentifier
      */
     private static function encodeRandom(int $length): string
     {
+        /** @phpstan-ignore-next-line */
         $randomBytes = random_bytes($length);
         $encoded = '';
 

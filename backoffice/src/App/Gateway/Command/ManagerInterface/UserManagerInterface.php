@@ -7,6 +7,6 @@ use Fulll\Domain\Entity\User;
 interface UserManagerInterface
 {
 
-    public function saveUser(User $user);
+    public function saveUser(User $user): self;
 
 }

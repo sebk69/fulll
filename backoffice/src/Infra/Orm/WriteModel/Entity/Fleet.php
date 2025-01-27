@@ -10,6 +10,7 @@ use Small\SwooleEntityManager\Entity\AbstractEntity;
 use Small\SwooleEntityManager\Entity\Attribute\OrmEntity;
 use Small\SwooleEntityManager\Entity\Attribute\PrimaryKey;
 use Small\SwooleEntityManager\Entity\Attribute\ToMany;
+use Small\SwooleEntityManager\EntityManager\AbstractManager;
 
 #[OrmEntity]
 class Fleet extends AbstractEntity
@@ -21,6 +22,13 @@ class Fleet extends AbstractEntity
     protected ?string $id = null;
     #[ToMany(VehicleInFleetManager::class, ['id' => 'idFleet'])]
     protected VehicleInFleetCollection $vehicleInFleet;
+
+    public function __construct(AbstractManager $manager)
+    {
+        $this->vehicleInFleet = new VehicleInFleetCollection();
+        parent::__construct($manager);
+    }
+
 
     public function getId(): ?string
     {
@@ -38,7 +46,7 @@ class Fleet extends AbstractEntity
         return $this->vehicleInFleet;
     }
 
-    public function setVehicleInFleet(VehicleInFleet $vehicleInFleet): self
+    public function setVehicleInFleet(VehicleInFleetCollection $vehicleInFleet): self
     {
         $this->vehicleInFleet = $vehicleInFleet;
         return $this;

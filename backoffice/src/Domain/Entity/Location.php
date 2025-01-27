@@ -32,7 +32,7 @@ class Location
 
     }
 
-    public function getLongitude(): float
+    public function getLongitude(): ?float
     {
         return $this->longitude;
     }

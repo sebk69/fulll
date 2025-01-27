@@ -33,6 +33,18 @@ final class RegisterVehicleCommand implements UseCaseInterface
             $myFleet = $request->getFleet();
         }
 
+        if ($myFleet === null) {
+            throw new \LogicException('my fleet is undefined !');
+        }
+
+        if ($myFleet->getId() === null) {
+            throw new \LogicException('my fleet id is undefined !');
+        }
+
+        if ($request->getVehicle()->getId() === null) {
+            throw new \LogicException('vehicle id is undefined !');
+        }
+
         // Check vehicle don't exist in my fleet
         if (
             $this

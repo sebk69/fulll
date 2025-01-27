@@ -30,7 +30,7 @@ final class ParkVehicleCommand implements UseCaseInterface
         }
 
         if ($request->getFleet() instanceof User) {
-            $myFleet = $request->getFleet()->getMyFleet();
+            $myFleet = $request->getFleet()->getMyFleet() ?? throw new \LogicException('my fleet undefined !');
         } else {
             $myFleet = $request->getFleet();
         }
@@ -38,7 +38,9 @@ final class ParkVehicleCommand implements UseCaseInterface
         // Check vehicle in fleet
         $found = true;
         try {
-            $myFleet->getVehicles()->getVehicleByLicensePlate($request->getVehicle()->getLicensePlate());
+            $myFleet
+                ->getVehicles()
+                ->getVehicleByLicensePlate($request->getVehicle()->getLicensePlate() ?? '');
         } catch (VehicleNotFoundException) {
             $found = false;
         }
@@ -58,7 +60,11 @@ final class ParkVehicleCommand implements UseCaseInterface
             throw new AlreadyParkedHereException('Vehicle already parked at this position');
         }
 
-        $parking->setLocation(clone $request->getVehicle()->getLocation());
+        $parking->setLocation(
+            $request->getVehicle()->getLocation() === null
+                ? null
+                : clone $request->getVehicle()->getLocation()
+        );
 
         // Persist parking
         $this->parkingVehicleManager->saveParkingVehicle($parking);

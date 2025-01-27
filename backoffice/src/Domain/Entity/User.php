@@ -27,18 +27,6 @@ class User
 
     }
 
-    public function getUserId(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUserId(?string $username): self
-    {
-        $this->username = $username;
-
-        return $this;
-    }
-
     public function getMyFleet(): ?Fleet
     {
         return $this->myFleet;
@@ -47,9 +35,20 @@ class User
     public function setMyFleet(?Fleet $myFleet): self
     {
 
-        $this->fleetId = $myFleet->getId();
+        $this->fleetId = $myFleet?->getId();
         $this->myFleet = $myFleet;
 
+        return $this;
+    }
+
+    public function getFleetId(): ?string
+    {
+        return $this->fleetId;
+    }
+
+    public function setFleetId(?string $fleetId): User
+    {
+        $this->fleetId = $fleetId;
         return $this;
     }
 

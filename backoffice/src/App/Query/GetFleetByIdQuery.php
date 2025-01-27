@@ -27,10 +27,16 @@ class GetFleetByIdQuery implements UseCaseInterface
             throw new BadRequestException('Request must be implements ' . GetFleetByIdRequestInterface::class);
         }
 
+
         $fleet = $this->fleetRepository->getFleetById($request->getFleetId());
         $fleet->setVehicles(
             $this->fleetRepository->getVehiclesInFleet($fleet)
         );
+
+        if ($fleet->getId() === null) {
+            throw new \LogicException('fleet is is null !');
+        }
+
         $fleet->setLastParkingVehicles(
             $this->parkingVehicleRepository->getParkingVehicleByFleetId($fleet->getId())
         );

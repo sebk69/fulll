@@ -24,6 +24,7 @@ class Vehicle extends AbstractEntity
     #[StringType]
     #[ValidateNotEmpty]
     protected ?string $licensePlate = null;
+    /** @var float[]|null  */
     #[Field(FieldValueType::json, JsonFormatType::array)]
     #[ArrayType(new StringType)]
     protected array|null $localization = null;
@@ -50,11 +51,18 @@ class Vehicle extends AbstractEntity
         return $this;
     }
 
+    /**
+     * @return float[]|null
+     */
     public function getLocalization(): array|null
     {
         return $this->localization;
     }
 
+    /**
+     * @param float[] $localization
+     * @return $this
+     */
     public function setLocalization(array $localization): Vehicle
     {
         $this->localization = $localization;

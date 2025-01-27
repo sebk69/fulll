@@ -14,6 +14,10 @@ class FleetVehicleCollection extends VehicleCollection
     public function setLastParkedPosition(Fleet $fleet, Vehicle $vehicle): self
     {
 
+        if ($vehicle->getId() === null) {
+            throw new VehicleNotFoundException('Vehicle id is null');
+        }
+
         try {
             $this->getVehicleInCollection(
                 $vehicle->getId()

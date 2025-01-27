@@ -7,6 +7,9 @@ use Fulll\App\Gateway\Command\ManagerInterface\UserManagerInterface;
 use Fulll\App\Gateway\Command\Request\AddUserRequestInterface;
 use Fulll\App\Gateway\Command\Response\AddUserResponseInterface;
 use Fulll\App\Gateway\Exception\BadRequestException;
+use Fulll\App\Gateway\Query\Request\GetFleetByIdRequestInterface;
+use Fulll\App\Gateway\Query\Response\GetFleetByIdResponseInterface;
+use Fulll\App\Query\GetFleetByIdQuery;
 use Fulll\Domain\Entity\User;
 use Small\CleanApplication\Contract\RequestInterface;
 use Small\CleanApplication\Contract\ResponseInterface;
@@ -29,9 +32,8 @@ final class AddUserCommand implements UseCaseInterface
 
         $user = User::create($request->getUserId());
 
-
         $this->fleetManager
-            ->saveFleet($user->getMyFleet());
+            ->saveFleet($user->getMyFleet() ?? throw new \LogicException('my fleet undefined !'));
 
         $this
             ->userManager

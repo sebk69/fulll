@@ -29,6 +29,7 @@ class CreateUserCommand extends Command
 
             AddUserCommand::class,
 
+            /** @phpstan-ignore-next-line  */
             new readonly class($input->getArgument('userId')) implements AddUserRequestInterface
             {
 
@@ -46,7 +47,7 @@ class CreateUserCommand extends Command
 
         );
 
-        $output->writeln('Fleet id : <fg=green>' . $response->getUser()->getMyFleet()->getId() . '</>');
+        $output->writeln('Fleet id : <fg=green>' . $response->getUser()->getMyFleet()?->getId() . '</>');
 
         return self::SUCCESS;
 

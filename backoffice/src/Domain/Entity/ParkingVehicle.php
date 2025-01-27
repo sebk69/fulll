@@ -13,7 +13,7 @@ class ParkingVehicle
     protected ?string $idFleet = null;
     protected ?Location $location = null;
 
-    public static function create($idVehicle, $idFleet, ?Location $location): self
+    public static function create(string $idVehicle, string $idFleet, ?Location $location): self
     {
 
         return (new self())
@@ -60,11 +60,16 @@ class ParkingVehicle
         return $this;
     }
 
-    public function isSameLocation(Location $location): bool
+    public function isSameLocation(Location|null $location): bool
     {
-        return $this->location->getLatitude() == $location->getLatitude() &&
-            $this->location->getLongitude() == $location->getLongitude() &&
-            $this->location->getAltitude() == $location->getAltitude();
+
+        if (null === $location) {
+            return false;
+        }
+
+        return $this->location?->getLatitude() == $location->getLatitude() &&
+            $this->location?->getLongitude() == $location->getLongitude() &&
+            $this->location?->getAltitude() == $location->getAltitude();
 
     }
 

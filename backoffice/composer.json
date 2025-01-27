@@ -14,7 +14,8 @@
     "require-dev": {
         "behat/behat": "*",
         "phpunit/dbunit": "*",
-        "friends-of-behat/symfony-extension": "*"
+        "friends-of-behat/symfony-extension": "*",
+        "phpstan/phpstan": "*"
     },
     "config": {
         "preferred-install": {
@@ -28,6 +29,7 @@
     },
     "scripts": {
         "behat": "vendor/bin/behat",
+        "phpstan": "vendor/bin/phpstan",
         "auto-scripts": {
             "cache:clear": "symfony-cmd"
         },

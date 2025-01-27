@@ -33,10 +33,12 @@ class RegisterVehicleCommand extends Command
     {
 
         /** @var Fleet $fleet */
+        /** @phpstan-ignore-next-line  */
         $fleet = Facade::execute(
 
             GetFleetByIdQuery::class,
 
+            /** @phpstan-ignore-next-line  */
             new readonly class($input->getArgument('fleetId')) implements GetFleetByIdRequestInterface
             {
 
@@ -50,15 +52,16 @@ class RegisterVehicleCommand extends Command
                 }
 
             }
-
         )->getFleet();
 
         try {
             /** @var Vehicle $vehicle */
+            /** @phpstan-ignore-next-line  */
             $vehicle = Facade::execute(
 
                 GetVehicleByLicensePlateQuery::class,
 
+                /** @phpstan-ignore-next-line  */
                 new readonly class($input->getArgument('licensePlate'))
                     implements GetVehicleByLicensePlateRequestInterface {
 
@@ -80,10 +83,13 @@ class RegisterVehicleCommand extends Command
             )->getVehicle();
         } catch (VehicleNotFoundException) {
 
+            /** @var Vehicle $vehicle */
+            /** @phpstan-ignore-next-line  */
             $vehicle = Facade::execute(
 
                 AddVehicleCommand::class,
 
+                /** @phpstan-ignore-next-line  */
                 new readonly class($input->getArgument('licensePlate')) implements AddVehicleRequestInterface {
 
                     public function __construct(

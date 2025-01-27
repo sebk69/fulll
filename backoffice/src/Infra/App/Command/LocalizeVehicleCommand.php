@@ -39,10 +39,12 @@ class LocalizeVehicleCommand extends Command
     {
 
         /** @var Fleet $fleet */
+        /** @phpstan-ignore-next-line  */
         $fleet = Facade::execute(
 
             GetFleetByIdQuery::class,
 
+            /** @phpstan-ignore-next-line  */
             new readonly class($input->getArgument('fleetId')) implements GetFleetByIdRequestInterface
             {
 
@@ -60,10 +62,12 @@ class LocalizeVehicleCommand extends Command
         )->getFleet();
 
         /** @var Vehicle $vehicle */
+        /** @phpstan-ignore-next-line  */
         $vehicle = Facade::execute(
 
             GetVehicleByLicensePlateQuery::class,
 
+            /** @phpstan-ignore-next-line  */
             new readonly class($input->getArgument('licensePlate'))
                 implements GetVehicleByLicensePlateRequestInterface {
 
@@ -90,10 +94,13 @@ class LocalizeVehicleCommand extends Command
 
             new readonly class($vehicle,
                 (new Location())
+                    /** @phpstan-ignore-next-line  */
                     ->setLatitude($input->getArgument('latitude'))
+                    /** @phpstan-ignore-next-line  */
                     ->setLongitude($input->getArgument('longitude'))
                     ->setAltitude(
-                        $input->hasArgument('altitude')
+                    /** @phpstan-ignore-next-line  */
+                    $input->hasArgument('altitude')
                             ? $input->getArgument('altitude')
                             : null
                     )

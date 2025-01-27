@@ -34,6 +34,7 @@ class CreateVehicleCommand extends Command
 
             RegisterVehicleCommand::class,
 
+            /** @phpstan-ignore-next-line  */
             new readonly class($input->getArgument('licensePlate')) implements AddVehicleRequestInterface
             {
 

@@ -5,6 +5,7 @@ namespace Fulll\Infra\Orm\WriteModel\Manager;
 use Fulll\App\Gateway\Command\ManagerInterface\ParkingVehicleManagerInterface;
 use Fulll\App\Gateway\Exception\ParkingVehiculeNotFoundEception;
 use Fulll\Infra\Orm\WriteModel\Entity\ParkingVehicle;
+use Fulll\Domain\Entity\Location;
 use Small\SwooleEntityManager\EntityManager\AbstractRelationnalManager;
 use Small\SwooleEntityManager\EntityManager\Attribute\Connection;
 use Small\SwooleEntityManager\EntityManager\Attribute\Entity;
@@ -19,6 +20,7 @@ class ParkingVehicleManager extends AbstractRelationnalManager
     {
 
         try {
+            /** @var ParkingVehicle $ormParkingVehicle */
             $ormParkingVehicle = $this->findOneBy([
                 'idFleet' => $parkingVehicle->getIdFleet(),
                 'idVehicle' => $parkingVehicle->getIdVehicle(),
@@ -31,11 +33,14 @@ class ParkingVehicleManager extends AbstractRelationnalManager
             $ormParkingVehicle->setIdFleet($parkingVehicle->getIdFleet());
         }
 
-        $ormParkingVehicle->setLocalization([
-            'latitude' => $parkingVehicle->getLocation()->getLatitude(),
-            'longitude' => $parkingVehicle->getLocation()->getLongitude(),
-            'altitude' => $parkingVehicle->getLocation()->getAltitude(),
-        ]);
+        if ($parkingVehicle->getLocation() !== null) {
+            /** @phpstan-ignore-next-line  */
+            $ormParkingVehicle->setLocalization([
+                'latitude' => $parkingVehicle->getLocation()->getLatitude(),
+                'longitude' => $parkingVehicle->getLocation()->getLongitude(),
+                'altitude' => $parkingVehicle->getLocation()->getAltitude(),
+            ]);
+        }
 
         $ormParkingVehicle->persist();
 
@@ -47,20 +52,23 @@ class ParkingVehicleManager extends AbstractRelationnalManager
     {
 
         try {
+            /** @var ParkingVehicle $ormParkingVehicle */
             $ormParkingVehicle = $this->findOneBy(['id' => $id]);
         } catch (EmptyResultException) {
             throw new ParkingVehiculeNotFoundEception('Parking Vehicle not found');
         }
 
-        $parkingVehicle = new ParkingVehicle();
+        $parkingVehicle = new \Fulll\Domain\Entity\ParkingVehicle();
         $parkingVehicle->setId($ormParkingVehicle->getId());
         $parkingVehicle->setIdVehicle($ormParkingVehicle->getIdVehicle());
         $parkingVehicle->setIdFleet($ormParkingVehicle->getIdFleet());
-        $parkingVehicle->setLocalization([
-            'latitude' => $ormParkingVehicle->getLocalization()->getLatitude(),
-            'longitude' => $ormParkingVehicle->getLocalization()->getLongitude(),
-            'altitude' => $ormParkingVehicle->getLocalization()->getAltitude(),
-        ]);
+        if ($ormParkingVehicle->getLocalization() != null) {
+            $parkingVehicle->setLocation((new Location())
+                ->setLatitude($ormParkingVehicle->getLocalization()['latitude'])
+                ->setLongitude($ormParkingVehicle->getLocalization()['longitude'])
+                ->setAltitude($ormParkingVehicle->getLocalization()['altitude'])
+            );
+        }
 
         return $parkingVehicle;
 

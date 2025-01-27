@@ -10,6 +10,7 @@ use Fulll\Domain\Collection\Exception\InvalidKeyException;
 use Fulll\Domain\Collection\Exception\OutOfBoundsException;
 use Fulll\Domain\Collection\Exception\ValueCheckFailedException;
 
+/** @phps  */
 class Collection implements \ArrayAccess, \Countable, \Iterator, \JsonSerializable
 {
 

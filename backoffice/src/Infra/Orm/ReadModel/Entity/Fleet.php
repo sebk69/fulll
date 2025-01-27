@@ -13,7 +13,6 @@ use Small\SwooleEntityManager\Entity\Attribute\OrmEntity;
 use Small\SwooleEntityManager\Entity\Attribute\PrimaryKey;
 use Small\SwooleEntityManager\Entity\Attribute\ToMany;
 use Small\SwooleEntityManager\EntityManager\AbstractManager;
-use function Termwind\parse;
 
 #[OrmEntity]
 #[Collection(FleetCollection::class)]
@@ -49,7 +48,7 @@ class Fleet extends AbstractEntity
         return $this->vehicleInFleet;
     }
 
-    public function setVehicleInFleet(VehicleInFleet $vehicleInFleet): Fleet
+    public function setVehicleInFleet(VehicleInFleetCollection $vehicleInFleet): Fleet
     {
         $this->vehicleInFleet = $vehicleInFleet;
         return $this;

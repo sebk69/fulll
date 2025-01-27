@@ -34,12 +34,14 @@ class ParkingVehicleRepository extends AbstractRelationnalManager
             $parkingVehicle->setId($ormParkingVehicle->getId());
             $parkingVehicle->setIdVehicle($ormParkingVehicle->getIdVehicle());
             $parkingVehicle->setIdFleet($ormParkingVehicle->getIdFleet());
-            $parkingVehicle->setLocation(
-                (new Location())
-                    ->setLatitude($ormParkingVehicle->getLocalization()['latitude'])
-                    ->setLongitude($ormParkingVehicle->getLocalization()['longitude'])
-                    ->setAltitude($ormParkingVehicle->getLocalization()['altitude'])
-            );
+            if ($ormParkingVehicle->getLocalization() !== null) {
+                $parkingVehicle->setLocation(
+                    (new Location())
+                        ->setLatitude($ormParkingVehicle->getLocalization()['latitude'])
+                        ->setLongitude($ormParkingVehicle->getLocalization()['longitude'])
+                        ->setAltitude($ormParkingVehicle->getLocalization()['altitude'])
+                );
+            }
             $parkingVehicleCollection[] = $parkingVehicle;
         }
 

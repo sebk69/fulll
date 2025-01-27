@@ -28,6 +28,7 @@ class ParkingVehicle extends AbstractEntity
     #[StringType]
     #[ValidateNotEmpty]
     protected ?string $idFleet = null;
+    /** @var float[]|null  */
     #[Field(FieldValueType::json, JsonFormatType::array)]
     #[ArrayType(new StringType)]
     protected array|null $localization = null;
@@ -62,14 +63,22 @@ class ParkingVehicle extends AbstractEntity
     public function setIdFleet(?string $idFleet): ParkingVehicle
     {
         $this->idFleet = $idFleet;
+
         return $this;
     }
 
-    public function getLocalization(): array
+    /**
+     * @return float[]|null
+     */
+    public function getLocalization(): array|null
     {
         return $this->localization;
     }
 
+    /**
+     * @param float[] $localization
+     * @return $this
+     */
     public function setLocalization(array $localization): ParkingVehicle
     {
         $this->localization = $localization;

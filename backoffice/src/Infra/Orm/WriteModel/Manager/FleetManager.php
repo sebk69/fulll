@@ -24,10 +24,13 @@ class FleetManager extends AbstractRelationnalManager
     public function saveFleet(\Fulll\Domain\Entity\Fleet $fleet): self
     {
 
+        $messages = new StringCollection();
         try {
-            FormBuilder::createFromAdapter(new AnnotationAdapter($ormFleet = $this->newEntity()))
+            /** @var Fleet $ormFleet */
+            $ormFleet = $this->newEntity();
+            FormBuilder::createFromAdapter(new AnnotationAdapter($ormFleet))
                 ->fillFromObject($fleet)
-                ->validate($messages = new StringCollection(), true)
+                ->validate($messages, true)
                 ->hydrate($ormFleet);
         } catch (ValidationFailException) {
             throw (new PersistFailException('Can\t persist fleet'))
@@ -44,6 +47,7 @@ class FleetManager extends AbstractRelationnalManager
     {
 
         try {
+            /** @phpstan-ignore-next-line  */
             $this->getRelation('vehicleInFleet')
                 ->getManager()
                 ->findOneBy(['idFleet' => $idFleet, 'idVehicle' => $idVehicle]);
@@ -66,9 +70,10 @@ class FleetManager extends AbstractRelationnalManager
         $vehicleInFleet->setIdFleet($fleetId);
         $vehicleInFleet->setIdVehicle($vehicleId);
 
+        $messages = new StringCollection();
         try {
             FormBuilder::createFromAdapter(new AnnotationAdapter($vehicleInFleet))
-                ->validate($messages = new StringCollection(), true);
+                ->validate($messages, true);
         } catch (ValidationFailException) {
             throw (new PersistFailException(
                 'Can\t persist vehicle #' . $vehicleId . ' in fleet #' . $fleetId

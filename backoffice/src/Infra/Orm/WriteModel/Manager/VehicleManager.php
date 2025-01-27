@@ -23,7 +23,7 @@ class VehicleManager extends AbstractRelationnalManager
     implements VehicleManagerInterface
 {
 
-    public function saveVehicle(\Fulll\Domain\Entity\Vehicle $vehicle)
+    public function saveVehicle(\Fulll\Domain\Entity\Vehicle $vehicle): self
     {
 
         $formArray = [
@@ -36,10 +36,13 @@ class VehicleManager extends AbstractRelationnalManager
             ],
         ];
 
+        $messages = new StringCollection();
         try {
-            FormBuilder::createFromAdapter(new AnnotationAdapter($ormVehicle = $this->newEntity()))
+            /** @var Vehicle $ormVehicle */
+            $ormVehicle = $this->newEntity();
+            FormBuilder::createFromAdapter(new AnnotationAdapter($ormVehicle))
                 ->fillFromArray($formArray)
-                ->validate($messages = new StringCollection(), true)
+                ->validate($messages, true)
                 ->hydrate($ormVehicle);
         } catch (ValidationFailException) {
             throw (new PersistFailException('Can\t persist vehicle'))
@@ -53,6 +56,8 @@ class VehicleManager extends AbstractRelationnalManager
         } catch (EmptyResultException) {}
 
         $ormVehicle->persist();
+
+        return $this;
 
     }
 

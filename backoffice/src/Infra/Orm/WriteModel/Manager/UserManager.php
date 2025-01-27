@@ -19,13 +19,16 @@ class UserManager extends AbstractRelationnalManager
     implements UserManagerInterface
 {
 
-    public function saveUser(\Fulll\Domain\Entity\User $user)
+    public function saveUser(\Fulll\Domain\Entity\User $user): self
     {
 
+        $messages = new StringCollection();
         try {
-            FormBuilder::createFromAdapter(new AnnotationAdapter($ormUser = $this->newEntity()))
+            /** @var User $ormUser */
+            $ormUser = $this->newEntity();
+            FormBuilder::createFromAdapter(new AnnotationAdapter($ormUser))
                 ->fillFromObject($user)
-                ->validate($messages = new StringCollection(), true)
+                ->validate($messages, true)
                 ->hydrate($ormUser);
         } catch (ValidationFailException) {
             $messages->map(function (int $i, string $message) {
@@ -36,6 +39,8 @@ class UserManager extends AbstractRelationnalManager
         }
 
         $ormUser->persist();
+
+        return $this;
 
     }
 

@@ -14,7 +14,7 @@ use Fulll\Domain\Entity\Vehicle;
 class VehicleCollection extends Collection
 {
 
-    public function getVehicleInCollection(int $vehicleId): Vehicle
+    public function getVehicleInCollection(string $vehicleId): Vehicle
     {
 
         foreach ($this as $vehicle) {
