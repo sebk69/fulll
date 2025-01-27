@@ -5,13 +5,15 @@ namespace Fulll\Infra\Orm\WriteModel\Entity;
 use Small\Forms\Form\Field\Type\ArrayType;
 use Small\Forms\Form\Field\Type\StringType;
 use Small\Forms\ValidationRule\ValidateNotEmpty;
+use Small\SwooleEntityManager\Entity\AbstractEntity;
 use Small\SwooleEntityManager\Entity\Attribute\Field;
 use Small\SwooleEntityManager\Entity\Attribute\OrmEntity;
 use Small\SwooleEntityManager\Entity\Attribute\PrimaryKey;
 use Small\SwooleEntityManager\Entity\Enum\FieldValueType;
+use Small\SwooleEntityManager\EntityManager\Enum\JsonFormatType;
 
 #[OrmEntity]
-class ParkingVehicle
+class ParkingVehicle extends AbstractEntity
 {
 
     #[PrimaryKey]
@@ -26,9 +28,9 @@ class ParkingVehicle
     #[StringType]
     #[ValidateNotEmpty]
     protected ?string $idFleet = null;
-    #[Field(FieldValueType::json)]
+    #[Field(FieldValueType::json, JsonFormatType::array)]
     #[ArrayType(new StringType)]
-    protected array $localization = [];
+    protected array|null $localization = null;
 
     public function getId(): ?string
     {

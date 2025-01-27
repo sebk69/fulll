@@ -2,7 +2,13 @@
 
 namespace App;
 
+use Fulll\App\Gateway\Query\FleetRepositoryInterface;
+use Fulll\App\Gateway\Query\VehicleRepositoryInterface;
+use Fulll\Infra\Orm\ReadModel\Manager\FleetRepository;
+use Fulll\Infra\Orm\ReadModel\Manager\ParkingVehicleRepository;
+use Fulll\Infra\Orm\ReadModel\Manager\VehicleRepository;
 use Fulll\Infra\Orm\WriteModel\Manager\FleetManager;
+use Fulll\Infra\Orm\WriteModel\Manager\ParkingVehicleManager;
 use Fulll\Infra\Orm\WriteModel\Manager\UserManager;
 use Fulll\Infra\Orm\WriteModel\Manager\VehicleManager;
 use Small\CleanApplication\Facade;
@@ -35,6 +41,30 @@ class Kernel extends BaseKernel
             $this->getContainer()
                 ->get(EntityManagerFactoryInterface::class)
                 ->get(VehicleManager::class)
+        );
+
+        Facade::setParameter('parkingVehicleManager',
+            $this->getContainer()
+                ->get(EntityManagerFactoryInterface::class)
+                ->get(ParkingVehicleManager::class)
+        );
+
+        Facade::setParameter('fleetRepository',
+            $this->getContainer()
+                ->get(EntityManagerFactoryInterface::class)
+                ->get(FleetRepository::class)
+        );
+
+        Facade::setParameter('vehicleRepository',
+            $this->getContainer()
+                ->get(EntityManagerFactoryInterface::class)
+                ->get(VehicleRepository::class)
+        );
+
+        Facade::setParameter('parkingVehicleRepository',
+            $this->getContainer()
+                ->get(EntityManagerFactoryInterface::class)
+                ->get(ParkingVehicleRepository::class)
         );
 
     }

@@ -27,6 +27,7 @@ class ParkingVehicleCollection extends Collection
 
         $fleet->getLastParkingVehicles()->push(
             $parking = (new ParkingVehicle())
+                ->generateId()
                 ->setIdFleet($fleet->getId())
                 ->setIdVehicle($vehicle->getId())
                 ->setLocation(new Location())

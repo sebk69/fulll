@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "3dfb9640d6887c9c4f99fbbfc48e684d",
+    "content-hash": "286ad08d1c47346296eb3b540c0d93e8",
     "packages": [
         {
             "name": "psr/cache",
@@ -291,11 +291,11 @@
         },
         {
             "name": "small/forms",
-            "version": "1.8.2",
+            "version": "1.8.3",
             "source": {
                 "type": "git",
                 "url": "https://git.small-project.dev/lib/small-forms",
-                "reference": "3406ed94e4c99cd0349c8ef562f3f119af042326"
+                "reference": "7326fdfff2067e9bb2c009db9924e0dd356612e3"
             },
             "require": {
                 "php": ">=8.1 <8.4",
@@ -329,7 +329,7 @@
                 "symfony",
                 "validation"
             ],
-            "time": "2025-01-05T01:47:35+00:00"
+            "time": "2025-01-26T22:35:25+00:00"
         },
         {
             "name": "small/swoole-db",
@@ -405,11 +405,11 @@
         },
         {
             "name": "small/swoole-entity-manager-core",
-            "version": "1.4.2",
+            "version": "1.4.4",
             "source": {
                 "type": "git",
                 "url": "https://git.small-project.dev/lib/small-swoole-entity-manager",
-                "reference": "cc6fa1f91e4b1cb04122d5d26785958757678656"
+                "reference": "b7911973171afb83720b467e99f1bafaad78c780"
             },
             "require": {
                 "ext-mbstring": "*",
@@ -449,7 +449,7 @@
                 "orm",
                 "swoole"
             ],
-            "time": "2025-01-18T13:56:47+00:00"
+            "time": "2025-01-27T15:53:27+00:00"
         },
         {
             "name": "small/swoole-patterns",
@@ -3357,6 +3357,74 @@
                 }
             ],
             "time": "2024-05-06T16:37:16+00:00"
+        },
+        {
+            "name": "friends-of-behat/symfony-extension",
+            "version": "v2.6.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FriendsOfBehat/SymfonyExtension.git",
+                "reference": "dfb1c9c96cc0fb7c8e1caa060695426a12e1efbd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FriendsOfBehat/SymfonyExtension/zipball/dfb1c9c96cc0fb7c8e1caa060695426a12e1efbd",
+                "reference": "dfb1c9c96cc0fb7c8e1caa060695426a12e1efbd",
+                "shasum": ""
+            },
+            "require": {
+                "behat/behat": "^3.6.1",
+                "php": "^8.1",
+                "symfony/dependency-injection": "^6.2 || ^7.0",
+                "symfony/http-kernel": "^6.2 || ^7.0"
+            },
+            "require-dev": {
+                "behat/mink": "^1.9",
+                "behat/mink-browserkit-driver": "^2.0",
+                "behat/mink-selenium2-driver": "^1.3",
+                "friends-of-behat/mink-extension": "^2.5",
+                "friends-of-behat/page-object-extension": "^0.3.2",
+                "friends-of-behat/service-container-extension": "^1.1",
+                "sylius-labs/coding-standard": ">=4.1.1, <=4.2.1",
+                "symfony/browser-kit": "^6.2 || ^7.0",
+                "symfony/framework-bundle": "^6.2 || ^7.0",
+                "symfony/process": "^6.2 || ^7.0",
+                "symfony/yaml": "^6.2 || ^7.0",
+                "vimeo/psalm": "4.30.0"
+            },
+            "suggest": {
+                "behat/mink": "^1.9",
+                "behat/mink-browserkit-driver": "^2.0",
+                "friends-of-behat/mink-extension": "^2.5"
+            },
+            "type": "symfony-bundle",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FriendsOfBehat\\SymfonyExtension\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Kamil Kokot",
+                    "email": "kamil@kokot.me",
+                    "homepage": "https://kamilkokot.com"
+                }
+            ],
+            "description": "Integrates Behat with Symfony.",
+            "support": {
+                "issues": "https://github.com/FriendsOfBehat/SymfonyExtension/issues",
+                "source": "https://github.com/FriendsOfBehat/SymfonyExtension/tree/v2.6.0"
+            },
+            "time": "2024-07-03T15:49:43+00:00"
         },
         {
             "name": "myclabs/deep-copy",

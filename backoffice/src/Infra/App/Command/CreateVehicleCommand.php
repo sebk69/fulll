@@ -2,8 +2,9 @@
 
 namespace App\Command;
 
-use Fulll\App\Command\AddUser;
-use Fulll\App\Command\AddVehicle;
+use Fulll\App\Command\AddUserCommand;
+use Fulll\App\Command\AddVehicleCommand;
+use Fulll\App\Command\RegisterVehicleCommand;
 use Fulll\App\Gateway\Command\Request\AddUserRequestInterface;
 use Fulll\App\Gateway\Command\Request\AddVehicleRequestInterface;
 use Fulll\App\Gateway\Command\Response\AddUserResponseInterface;
@@ -21,7 +22,8 @@ class CreateVehicleCommand extends Command
 
     protected function configure(): void
     {
-        $this->addArgument('licensePlate', InputArgument::REQUIRED, 'Username');
+        $this->addArgument('fleetId', InputArgument::REQUIRED, 'Fleet id');
+        $this->addArgument('licensePlate', InputArgument::REQUIRED, 'License plate');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -30,7 +32,7 @@ class CreateVehicleCommand extends Command
         /** @var AddVehicleResponseInterface $response */
         $response = Facade::execute(
 
-            AddVehicle::class,
+            RegisterVehicleCommand::class,
 
             new readonly class($input->getArgument('licensePlate')) implements AddVehicleRequestInterface
             {

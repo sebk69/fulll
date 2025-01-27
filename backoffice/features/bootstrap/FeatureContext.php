@@ -8,7 +8,7 @@ use Behat\Step\When;
 use Behat\Step\Then;
 use Fulll\Domain\Entity\User;
 use Fulll\Domain\Entity\Vehicle;
-use Fulll\App\Command\RegisterVehicle;
+use Fulll\App\Command\RegisterVehicleCommand;
 use Fulll\Domain\Entity\Location;
 use PHPUnit\Framework\Assert;
 
@@ -49,7 +49,7 @@ class FeatureContext implements Context
     public function aLocation(): void
     {
 
-        $this->location = new Location()
+        $this->location = (new Location())
             ->setLatitude(43.9699)
             ->setLongitude(4.8600)
             ->setAltitude(98);
@@ -63,7 +63,23 @@ class FeatureContext implements Context
     {
 
         try {
-            new RegisterVehicle()
+            (new RegisterVehicleCommand(
+                new class implements \Fulll\App\Gateway\Command\ManagerInterface\FleetManagerInterface
+                {
+                    public function saveFleet(\Fulll\Domain\Entity\Fleet $fleet): self { return $this; }
+
+                    public function fleetHasVehicle(string $idFleet, string $idVehicle): bool
+                    {
+
+                    }
+
+                    public function addVehicleToFleet(string $fleetId, string $vehicleId): \Fulll\App\Gateway\Command\ManagerInterface\FleetManagerInterface
+                    {
+                        // TODO: Implement addVehicleToFleet() method.
+                    }
+
+                }
+            ))
                 ->execute($this->myself, $this->vehicle);
         } catch (\Exception $e) {
             $this->exception = $e;
@@ -76,7 +92,7 @@ class FeatureContext implements Context
     {
 
         try {
-            new RegisterVehicle()
+            (new RegisterVehicleCommand())
                 ->execute($this->anotherUser, $this->vehicle);
         } catch (\Exception $e) {
             $this->exception = $e;
@@ -119,7 +135,7 @@ class FeatureContext implements Context
 
         try {
             $this->vehicle->setLocation($this->location);
-            new \Fulll\App\Command\ParkVehicle()
+            (new \Fulll\App\Command\ParkVehicleCommand())
                 ->execute($this->myself, $this->vehicle);
         } catch (\Exception $e) {
             $this->exception = $e;

@@ -11,7 +11,6 @@ class Fleet
 
     use HasIdentifier;
 
-    private ?string $idUser;
     private FleetVehicleCollection $vehicles;
     private ParkingVehicleCollection $lastParkingVehicles;
 
@@ -21,25 +20,12 @@ class Fleet
         $this->lastParkingVehicles = new ParkingVehicleCollection();
     }
 
-    public static function create(string $idUser): self
+    public static function create(): self
     {
 
         return (new self())
-            ->generateId()
-            ->setIdUser($idUser);
+            ->generateId();
 
-    }
-
-    public function getIdUser(): ?string
-    {
-        return $this->idUser;
-    }
-
-    public function setIdUser(?string $idUser): self
-    {
-        $this->idUser = $idUser;
-
-        return $this;
     }
 
     public function getVehicles(): FleetVehicleCollection

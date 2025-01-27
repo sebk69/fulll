@@ -1,0 +1,28 @@
+#!/bin/bash
+
+if [ -f '/bin/docker' ]
+then
+    if [ "$(docker ps | grep backoffice)" = "" ]
+    then
+        docker compose up -d --build
+        bin/composer update
+    fi
+    command="bin/console-docker"
+else
+    command="bin/console"
+fi
+
+if [ "$1" == "create" ]
+then
+  ./$command app:user:create $2
+fi
+
+if [ "$1" == "register-vehicle" ]
+then
+  ./$command app:vehicle:register $2 $3
+fi
+
+if [ "$1" == "localize-vehicle" ]
+then
+  ./$command app:vehicle:park $2 $3
+fi

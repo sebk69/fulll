@@ -2,7 +2,7 @@
 
 namespace App\Command;
 
-use Fulll\App\Command\AddUser;
+use Fulll\App\Command\AddUserCommand;
 use Fulll\App\Gateway\Command\Request\AddUserRequestInterface;
 use Fulll\App\Gateway\Command\Response\AddUserResponseInterface;
 use Small\CleanApplication\Facade;
@@ -18,7 +18,7 @@ class CreateUserCommand extends Command
 
     protected function configure(): void
     {
-        $this->addArgument('username', InputArgument::REQUIRED, 'Username');
+        $this->addArgument('userId', InputArgument::REQUIRED, 'Id of the user.');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output): int
@@ -27,18 +27,18 @@ class CreateUserCommand extends Command
         /** @var AddUserResponseInterface $response */
         $response = Facade::execute(
 
-            AddUser::class,
+            AddUserCommand::class,
 
-            new readonly class($input->getArgument('username')) implements AddUserRequestInterface
+            new readonly class($input->getArgument('userId')) implements AddUserRequestInterface
             {
 
                 public function __construct(
-                    private string $username
+                    private string $userId
                 ) {}
 
-                public function getUsername(): string
+                public function getUserId(): string
                 {
-                    return $this->username;
+                    return $this->userId;
                 }
 
 
@@ -46,7 +46,7 @@ class CreateUserCommand extends Command
 
         );
 
-        $output->writeln('User id : <fg=green>' . $response->getUser()->getId() . '</>');
+        $output->writeln('Fleet id : <fg=green>' . $response->getUser()->getMyFleet()->getId() . '</>');
 
         return self::SUCCESS;
 

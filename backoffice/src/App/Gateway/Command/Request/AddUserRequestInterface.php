@@ -7,6 +7,6 @@ use Small\CleanApplication\Contract\RequestInterface;
 interface AddUserRequestInterface extends RequestInterface
 {
 
-    public function getUsername(): string;
+    public function getUserId(): string;
 
 }

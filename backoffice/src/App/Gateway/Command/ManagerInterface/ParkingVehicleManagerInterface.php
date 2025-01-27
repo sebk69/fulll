@@ -7,7 +7,7 @@ use Fulll\Domain\Entity\ParkingVehicle;
 interface ParkingVehicleManagerInterface
 {
 
-    public function saveParkingVehicle(ParkingVehicle $parkingVehicle);
-    public function getParkingVehicleById(string $id);
+    public function saveParkingVehicle(ParkingVehicle $parkingVehicle): self;
+    public function getParkingVehicleById(string $id): ParkingVehicle;
 
 }

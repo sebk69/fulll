@@ -5,3 +5,4 @@ CHANGE MASTER TO
     MASTER_LOG_FILE='mysql-bin.000001',
     MASTER_LOG_POS=157;
 START SLAVE;
+GRANT SELECT ON `fleet-manager`.* TO 'backoffice'@'%';

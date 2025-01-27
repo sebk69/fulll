@@ -12,7 +12,7 @@ use Small\CleanApplication\Contract\RequestInterface;
 use Small\CleanApplication\Contract\ResponseInterface;
 use Small\CleanApplication\Contract\UseCaseInterface;
 
-class AddUser implements UseCaseInterface
+final class AddUserCommand implements UseCaseInterface
 {
 
     public function __construct(
@@ -27,7 +27,7 @@ class AddUser implements UseCaseInterface
             throw new BadRequestException('Request must be implements ' . AddUserRequestInterface::class);
         }
 
-        $user = User::create($request->getUsername());
+        $user = User::create($request->getUserId());
 
 
         $this->fleetManager

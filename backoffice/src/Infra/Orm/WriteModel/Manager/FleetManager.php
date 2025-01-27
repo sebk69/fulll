@@ -13,6 +13,7 @@ use Small\Forms\ValidationRule\Exception\ValidationFailException;
 use Small\SwooleEntityManager\EntityManager\AbstractRelationnalManager;
 use Small\SwooleEntityManager\EntityManager\Attribute\Connection;
 use Small\SwooleEntityManager\EntityManager\Attribute\Entity;
+use Small\SwooleEntityManager\EntityManager\Exception\EmptyResultException;
 
 #[Entity(Fleet::class)]
 #[Connection('fleet', 'writer')]
@@ -20,7 +21,7 @@ class FleetManager extends AbstractRelationnalManager
     implements FleetManagerInterface
 {
 
-    public function saveFleet(\Fulll\Domain\Entity\Fleet $fleet)
+    public function saveFleet(\Fulll\Domain\Entity\Fleet $fleet): self
     {
 
         try {
@@ -34,14 +35,27 @@ class FleetManager extends AbstractRelationnalManager
         }
 
         $ormFleet->persist();
+
+        return $this;
+
     }
 
-    public function fleetHasVehicle(string $fleetId, string $vehicleId): bool
+    public function fleetHasVehicle(string $idFleet, string $idVehicle): bool
     {
 
+        try {
+            $this->getRelation('vehicleInFleet')
+                ->getManager()
+                ->findOneBy(['idFleet' => $idFleet, 'idVehicle' => $idVehicle]);
+        } catch (EmptyResultException) {
+            return false;
+        }
+
+        return true;
+
     }
 
-    public function addVehicleToFleet(string $fleetId, string $vehicleId): bool
+    public function addVehicleToFleet(string $fleetId, string $vehicleId): self
     {
 
         /** @var VehicleInFleet $vehicleInFleet */
@@ -49,6 +63,8 @@ class FleetManager extends AbstractRelationnalManager
             ->getManager()
             ->newEntity();
         $vehicleInFleet->setId($fleetId . $vehicleId);
+        $vehicleInFleet->setIdFleet($fleetId);
+        $vehicleInFleet->setIdVehicle($vehicleId);
 
         try {
             FormBuilder::createFromAdapter(new AnnotationAdapter($vehicleInFleet))
@@ -60,6 +76,8 @@ class FleetManager extends AbstractRelationnalManager
         }
 
         $vehicleInFleet->persist();
+
+        return $this;
 
     }
 

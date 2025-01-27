@@ -62,10 +62,9 @@ class ParkingVehicle
 
     public function isSameLocation(Location $location): bool
     {
-
-        return $this->location->getLatitude() === $location->getLatitude() &&
-            $this->location->getLongitude() === $location->getLongitude() &&
-            $this->location->getAltitude() === $location->getAltitude();
+        return $this->location->getLatitude() == $location->getLatitude() &&
+            $this->location->getLongitude() == $location->getLongitude() &&
+            $this->location->getAltitude() == $location->getAltitude();
 
     }
 

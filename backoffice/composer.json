@@ -13,7 +13,8 @@
     },
     "require-dev": {
         "behat/behat": "*",
-        "phpunit/dbunit": "*"
+        "phpunit/dbunit": "*",
+        "friends-of-behat/symfony-extension": "*"
     },
     "config": {
         "preferred-install": {
@@ -40,7 +41,8 @@
     "autoload": {
         "psr-4": {
             "Fulll\\": "src/",
-            "App\\": "src/Infra/App/"
+            "App\\": "src/Infra/App/",
+            "App\\Tests\\": "tests/"
         }
     }
 }

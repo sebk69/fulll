@@ -9,7 +9,6 @@ class User
 
     use HasIdentifier;
 
-    private ?string $username = null;
     private ?string $fleetId = null;
     private ?Fleet $myFleet;
 
@@ -18,23 +17,22 @@ class User
         $this->myFleet = new Fleet();
     }
 
-    public static function create(string $username): self
+    public static function create(string $userId): self
     {
 
         return ($user = new self())
-            ->generateId()
-            ->setUsername($username)
-            ->setMyFleet(Fleet::create($user->id))
+            ->setId($userId)
+            ->setMyFleet(Fleet::create())
         ;
 
     }
 
-    public function getUsername(): ?string
+    public function getUserId(): ?string
     {
         return $this->username;
     }
 
-    public function setUsername(?string $username): self
+    public function setUserId(?string $username): self
     {
         $this->username = $username;
 

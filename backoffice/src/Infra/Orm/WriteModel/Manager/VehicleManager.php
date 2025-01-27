@@ -15,9 +15,10 @@ use Small\Forms\ValidationRule\Exception\ValidationFailException;
 use Small\SwooleEntityManager\EntityManager\AbstractRelationnalManager;
 use Small\SwooleEntityManager\EntityManager\Attribute\Connection;
 use Small\SwooleEntityManager\EntityManager\Attribute\Entity;
+use Small\SwooleEntityManager\EntityManager\Exception\EmptyResultException;
 
 #[Entity(Vehicle::class)]
-#[Connection('fleet', 'writer')]
+#[Connection('vehicle', 'writer')]
 class VehicleManager extends AbstractRelationnalManager
     implements VehicleManagerInterface
 {
@@ -28,7 +29,7 @@ class VehicleManager extends AbstractRelationnalManager
         $formArray = [
             'id' => $vehicle->getId(),
             'licensePlate' => $vehicle->getLicensePlate(),
-            'location' => $vehicle->getLocation() === null ? null : [
+            'localization' => $vehicle->getLocation() === null ? null : [
                 'longitude' => $vehicle->getLocation()->getLongitude(),
                 'latitude' => $vehicle->getLocation()->getLatitude(),
                 'altitude' => $vehicle->getLocation()->getAltitude(),
@@ -44,6 +45,12 @@ class VehicleManager extends AbstractRelationnalManager
             throw (new PersistFailException('Can\t persist vehicle'))
                 ->setReasons($messages);
         }
+
+        try {
+            $this->findOneBy(['id' => $vehicle->getId()]);
+            $ormVehicle->fromDb = true;
+            $ormVehicle->setOriginalPrimaryKeys();
+        } catch (EmptyResultException) {}
 
         $ormVehicle->persist();
 

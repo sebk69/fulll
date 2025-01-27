@@ -22,10 +22,6 @@ class User extends AbstractEntity
 
     #[Field(FieldValueType::string)]
     #[StringType]
-    #[ValidateNumberCharsBetween(1, 64)]
-    protected ?string $username = null;
-    #[Field(FieldValueType::string)]
-    #[StringType]
     #[ValidateNotEmpty]
     protected ?string $fleetId = null;
 
@@ -37,17 +33,6 @@ class User extends AbstractEntity
     public function setId(?string $id): User
     {
         $this->id = $id;
-        return $this;
-    }
-
-    public function getUsername(): ?string
-    {
-        return $this->username;
-    }
-
-    public function setUsername(?string $username): User
-    {
-        $this->username = $username;
         return $this;
     }
 
