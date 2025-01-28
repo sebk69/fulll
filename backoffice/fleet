@@ -27,6 +27,9 @@ else
     command="bin/console"
 fi
 
+# Execute missing database layers
+./$command swoole:entity-manager:layers-execute
+
 # Process commands and validate arguments
 case "$1" in
     create)
